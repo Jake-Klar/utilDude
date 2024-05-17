@@ -26,7 +26,7 @@ module.exports = {
         })
         .then((response) => response.json())
         .then((json) => console.log(json));
-        interaction.reply('yer')
+        interaction.reply('yer');
     }
     
 }
