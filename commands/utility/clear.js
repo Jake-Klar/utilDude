@@ -1,17 +1,19 @@
 const {SlashCommandBuilder} = require('discord.js');
 
-//Not operational
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('clear')
-        .setDescription('clear 50 messages of the channel the command is used in'),
-     execute(interaction) {
-        interaction.reply('Deleting 50 messages from this channel!');
-        interaction.channel.messages.fetch()
-            .then(messages => {
-                for (let m in messages) {
-                    interaction.channel.delete(m);
-                }
-            })
+        .setDescription('clear x messages of the channel the command is used in')
+        .addIntegerOption(option => 
+            option.setName('num')
+            .setRequired(true)
+            .setDescription('number of messages to be removed')),
+     async execute(interaction) {
+        let msgCount = interaction.options.getInteger('num');
+        const fetchedMessages = await interaction.channel.messages.fetch({limit: msgCount});
+        await fetchedMessages.each((message => {
+            interaction.channel.messages.delete(message.id);
+        }))
+        interaction.reply(`Deleting ${msgCount} messages from this channel!`);
     }
 }

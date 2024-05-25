@@ -396,3 +396,10 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Node Modules
+.node_modules/
+*.mjs
+
+# Config Files
+config.json
